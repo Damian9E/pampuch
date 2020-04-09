@@ -8,7 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CalculatorFrame extends JFrame {
-    private JTextField textField, textFieldBig;
+    private JTextField textField, textFieldBig; // bardziej opisowe nazwy zmiennych, tak żeby mówiły co jest w tym polu
+    // na przyklad private JTextField calculationResultTF
     private JTextArea textAreaMemory;
     protected double first, answer;
     protected String operation;
@@ -17,6 +18,7 @@ public class CalculatorFrame extends JFrame {
     private static final int TF_WIDTH = 397, TF_HEIGHT = 30, TF_LOCATION_X = 2, TF_LOCATION_Y = 72;
     private static final int TFB_WIDTH = 397, TFB_HEIGHT = 100, TFB_LOCATION_X = 2, TFB_LOCATION_Y = 95;
     private static int BUTTON_LOCATION_X = 2, BUTTON_LOCATION_Y = 244, BUTTON_WIDTH = 100, BUTTON_LENGTH = 50;
+    // konwencja NAZWA_ZMIENNEJ jest dla stalych
     private static int LABEL_MEMORY_LOCATION_X = 400, LABEL_MEMORY_LOCATION_Y = 2, LABEL_MEMORY_WIDTH = 150, LABEL_MEMORY_HEIGHT = 50;
     private static final int BUTTON_LOCATION_X_INCREASE = 99, BUTTON_LOCATION_Y_INCREASE = 49, BUTTON_LOCATION_X_DEFAULT = 2, BUTTONM_LOCATION_X_INCREASE = 79;
     private static final int SCROLL_PANE_WIDTH = 386, SCROLL_PANE_HEIGHT = 467;
@@ -38,7 +40,7 @@ public class CalculatorFrame extends JFrame {
 
     private void initDefaultSettings(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        setSize(FRAME_WIDTH,FRAME_HEIGHT); // spacje po przecinku ! :D
         setResizable(false);
         setVisible(true);
         setLayout(null);
@@ -100,6 +102,9 @@ public class CalculatorFrame extends JFrame {
 
     void createButton(String text){
         JButton button = new JButton(text);
+        // po if spacja (nie trzeba, ale ja lubie)
+        // ponizszy if mozna uproscic, albo podajac do funkcji parametr: boolean isNumber - wolalbym tak niz propozycja nizej
+        // albo probujac skonwertowac text na Integer i jesli sie uda to sprawdzic czy jest z zakresu 0-9
         if(text.equals("0") || text.equals("1") || text.equals("2") || text.equals("3") || text.equals("4") || text.equals("5") || text.equals("6") || text.equals("7") || text.equals("8") || text.equals("9")){
             button.addActionListener(new ButtonNumberListener(Integer.parseInt(text)));
         } else {
@@ -111,6 +116,11 @@ public class CalculatorFrame extends JFrame {
     private void buildButton() {
         jButtonArrayList = new ArrayList<>();
 
+        // to tez mozna uproscic, np tworzac tablice stringow z tymi znakami nizej i potem po niej iterowac
+        // i dla kazdej iteracji wolac createButton - choc bedzie sie to klocic z propozycja uproszczenia w createButton
+        // bo musialabys miec druga tablice z flagami
+        // wiec zamiast tablicy moglaby byc mapa, gdzie kluczem bylby znak, a wartoscia boolean czy to liczba
+        // zrob jak wolisz
         createButton("%");
         createButton("CE");
         createButton("C");
@@ -144,8 +154,10 @@ public class CalculatorFrame extends JFrame {
         for(int i = 0; i<FIRST_M; i++){
             jButtonArrayList.get(i).setBounds(BUTTON_LOCATION_X, BUTTON_LOCATION_Y, BUTTON_WIDTH, BUTTON_LENGTH);
             BUTTON_LOCATION_X += BUTTON_LOCATION_X_INCREASE;
+            // tak jak wyzej pisalem DUPA_ZMIENNA to konwencja dla stalych, albo zamien je na lower case
+            // albo wyzej zmien na final, a tutaj stworz lokalnie zmienną ktora przyjmie wartosc stalej
             COUNT_BUTTON++;
-            if(COUNT_BUTTON%4 == 0){
+            if(COUNT_BUTTON%4 == 0){ // spacje pomiedzy COUNT_BUTTON % 4
                 BUTTON_LOCATION_Y += BUTTON_LOCATION_Y_INCREASE;
                 BUTTON_LOCATION_X = BUTTON_LOCATION_X_DEFAULT;
             }
@@ -180,6 +192,8 @@ public class CalculatorFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             Object sourceOfAction = e.getActionCommand();
 
+            // to nie do konca mialo tak byc, zobacz, ze 1 i 3 linijka w ifach dalej jest taka sama
+            // sprobuj to poprawic
             if(sourceOfAction == "+") {
                 first = Double.parseDouble(textFieldBig.getText());
                 operation = "+";
