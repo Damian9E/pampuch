@@ -119,8 +119,12 @@ public class CalculatorFrame extends JFrame {
         for (int i=0; i<29; i++) {
             createButton(nameButton[i]);
         }
+        // petle wyzej zamien na petle typu for each, jest bardziej elegancka:
+        // for (String bName : buttonNames) {
+        //      createButton(bName);
+        // }
 
-        for (int i = 0; i<FIRST_M; i++) {
+        for (int i = 0; i<FIRST_M; i++) { // tutaj znowu spacje pomiedzy i < FIRST_M
             jButtonArrayList.get(i).setBounds(locationXB, locationYB, widthB, lengthB);
             locationXB += BUTTON_LOCATION_X_INCREASE;
             countB++;
